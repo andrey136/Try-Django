@@ -1,4 +1,4 @@
-##Virtual Environment
+## Virtual Environment
 
 ### Creating virtual environment
 
@@ -32,4 +32,50 @@ I. it keeps all the requirements seperate.
 * cd venv4
 * virtualenv . -p python3
 
+
+## Django Project
+
+### First Steps 
+
+* mkdir src
+* cd src
+* django-admin startproject trydjango . 
+* (__name of the project__: trydjango, __current folder__: .)
+* python manage.py runserver
+
+### Running our database
+
+* python manage.py migrate
+
+## Creating an app
+
+### Built-in components
+
+* Apps are pieces or components of a bigger django project
+
+* In setting.py file in INSTALLED_APPS you put third party apps or your own
+
+### Further commands
+
+* python manage.py migrate
+* python manage.py createsuperuser
+* Then authorize in /admin
+
+### Adding apps
+
+* python manage.py startapp products
+* python manage.py startapp cart
+* python manage.py startapp blog
+* python manage.py startapp profiles
+
+### Creating Models
+
+* Put this code in products/models.py
+
+class Product(models.Model):
+    title       = models.TextField()
+    description = models.TextField()
+    price       = models.TextField()
+
+* Add products to the ISTALLED_APPS list in settings.py
 
