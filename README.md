@@ -55,7 +55,7 @@ I. it keeps all the requirements seperate.
 
 * In setting.py file in INSTALLED_APPS you put third party apps or your own
 
-### Further commands
+### Migrating dbs with projects and creating a super user(admin)
 
 * python manage.py migrate
 * python manage.py createsuperuser
@@ -78,4 +78,25 @@ class Product(models.Model):
     price       = models.TextField()
 
 * Add products to the ISTALLED_APPS list in settings.py
+* Then save the settings.py file and models.py file
+
+### Migrate commands
+
+* As you change models.py save it!!!
+* ALWAYS run these commands after making any changes to models.py
+
+* python manage.py makemigrations
+* python manage.py migrate
+
+* Run in conjuction with each other every single time you make changes to models.py
+
+
+from django.db import models
+#Create your models here.
+class Product(models.Model):
+    title       = models.TextField()
+    description = models.TextField()
+    price       = models.TextField()
+    __summery     = models.TextField()__ --(new line in models.py)
+
 
