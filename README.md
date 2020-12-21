@@ -106,6 +106,35 @@ class Product(models.Model):
  * from products.models import Product
  * Product.objects.all()
  * Product.objects.create()
+ * Product.objects.create(title='New product 2', description='another one', price='19312', summary='sweet')
+
+## New Model Fields
+
+### Starting over
+
+* To start over you need to delete all the files in migration folder except for the init.py in products app
+
+* Delete sqlite db
+
+* Check out https://docs.djangoproject.com/en/3.1/ref/models/fields/#django.db.models.AutoField
+
+### Changes in models.py
+
+from django.db import models
+
+#Create your models here.
+class Product(models.Model):
+    title       = models.CharField(max_length=120) # max_length = required
+    description = models.TextField(blank=True, null=True)
+    price       = models.DecimalField(decimal_places=2, max_digits=10000)
+    summary     = models.TextField()
+
+### Further commands
+
+* python manage.py makemigrations
+* python manage.py migrate
+* python manage.py createsuperuser -- because we deleted our sqlite database
+
 
 
 ## ERRORS
@@ -114,3 +143,14 @@ class Product(models.Model):
 
 Solution
 * pip install django==2.1.5
+
+### products.Product.title: (fields.E120) CharFields must define a 'max_length' attribute.
+
+#Create your models here.
+class Product(models.Model):
+    title       = __models.CharField() # max_length = required__
+    description = models.TextField()
+    price       = models.TextField()
+    summary     = models.TextField(default='this is cool!')
+
+* title = models.CharField(max_length=120) -- You must set max_width attribute with models.CharField() field type
