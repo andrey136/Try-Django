@@ -99,6 +99,14 @@ class Product(models.Model):
     price       = models.TextField()
     __summery     = models.TextField()__ --(new line in models.py)
 
+## Create Product Objects in the Python shell
+
+### Creating Object
+ * python manage.py shell
+ * from products.models import Product
+ * Product.objects.all()
+ * Product.objects.create()
+
 
 ## ERRORS
 
