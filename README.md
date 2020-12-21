@@ -100,3 +100,9 @@ class Product(models.Model):
     __summery     = models.TextField()__ --(new line in models.py)
 
 
+## ERRORS
+
+### OperationalError at /admin/products/product/add/
+
+Solution
+* pip install django==2.1.5
