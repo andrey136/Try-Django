@@ -135,6 +135,12 @@ class Product(models.Model):
 * python manage.py migrate
 * python manage.py createsuperuser -- because we deleted our sqlite database
 
+* python manage.py shell
+* from products.models import Product
+* Product.objects.create(title='Newer title', price=239.99, summary='Awesome sause')
+
+## Change a model
+
 
 
 ## ERRORS
