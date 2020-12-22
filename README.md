@@ -110,6 +110,8 @@ class Product(models.Model):
 
 ## New Model Fields
 
+
+
 ### Starting over
 
 * To start over you need to delete all the files in migration folder except for the init.py in products app
@@ -140,6 +142,7 @@ class Product(models.Model):
 * Product.objects.create(title='Newer title', price=239.99, summary='Awesome sause')
 
 ## Change a model
+* if blank attribute = False then the field is required to be filled
 
 
 
@@ -160,3 +163,37 @@ class Product(models.Model):
     summary     = models.TextField(default='this is cool!')
 
 * title = models.CharField(max_length=120) -- You must set max_width attribute with models.CharField() field type
+
+### You are trying to add a non-nullable field 'featured' to product
+This happens after changing the model of an APP without making any changes to the previous objects of this model in a database
+
+Previous model:
+#Create your models here.
+class Product(models.Model):
+    title       = __models.CharField() # max_length = required__
+    description = models.TextField()
+    price       = models.TextField()
+    summary     = models.TextField(default='this is cool!')
+
+Current model:
+#Create your models here.
+class Product(models.Model):
+    title       = models.CharField(max_length=120) # max_length = required
+    description = models.TextField(blank=True, null=True)
+    price       = models.DecimalField(decimal_places=2, max_digits=10000)
+    summary     = models.TextField()
+    featured    = models.BooleanField()
+
+>> There's at least two solutions
+1. featured = models.BooleanField(null=True)
+* Leaves this field empty in all the previous objects
+1.  featured = models.BooleanField(default=True)
+* Sets this field to true in all the previous objects
+1. Choose one of the options provided in the shell
+* 1
+* True
+
+### OperationalError at /admin/products/product/ no such column: products_product.featured
+
+* python manage.py makemigrations
+* python manage.py migrate
