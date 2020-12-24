@@ -79,6 +79,15 @@ class Product(models.Model):
 
 * Add products to the ISTALLED_APPS list in settings.py
 * Then save the settings.py file and models.py file
+* Write this code to the admin.py
+
+from django.contrib import admin
+
+#Register your models here.
+from .models import MacBook
+
+admin.site.register(MacBook)
+* save it
 
 ### Migrate commands
 
@@ -97,7 +106,7 @@ class Product(models.Model):
     title       = models.TextField()
     description = models.TextField()
     price       = models.TextField()
-    __summery     = models.TextField()__ --(new line in models.py)
+    __summary     = models.TextField()__ --(new line in models.py)
 
 ## Create Product Objects in the Python shell
 
