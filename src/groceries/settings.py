@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     'fruits',
     'laptops',
-    'Dairy'
+    'Dairy',
+    'pages'
 ]
 
 MIDDLEWARE = [
