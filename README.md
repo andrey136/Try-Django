@@ -2,72 +2,95 @@
 
 ### Creating virtual environment
 
-* virtualenv -p python3 .
-* source bin/activate (or .\Scripts\activate)
-* pip3 install django==2.0.7
+```
+virtualenv -p python3 .
+
+source bin/activate (or .\Scripts\activate)
+
+pip3 install django==2.1.5
+```
 
 ### Activating virtual environment
 
-* cd django-project-folder
-* source bin/activate  (or .\Scripts\activate)
-* deactivate
+```
+cd django-project-folder
+
+source bin/activate  (or .\Scripts\activate)
+
+deactivate
+```
 
 ### Looking at the requirements
+```
+pip3 freeze
+```
 
-* pip3 freeze
-
-It's important to use virtual environment for your projects for several reasons.
-I. it keeps all the requirements seperate.
+Why is it important to use virtual environment for your projects?
+* It keeps all the requirements seperate.
 
 ### 3 ways to create a virtual environment
 
-* virtualenv venv
-* virtualenv venv2 -p python3
-(To find the location where python3 is intalled: which python3)
-(Add the path to the command)
-* virtualenv venv3 -p python3_path
+1. virtualenv venv
+1. virtualenv venv2 -p python3
+1. virtualenv venv3 -p python3_path
+    * Find the location where python3 is intalled
+    * Add the path to the command
 ### The 4th method to create virtual environment
+```
+mkdir venv4
 
-* mkdir venv4
-* cd venv4
-* virtualenv . -p python3
+cd venv4
 
+virtualenv . -p python3
+```
 
 ## Django Project
 
-### First Steps 
+### Starting a New Django Project in a Vitual Environment
 
-* mkdir src
-* cd src
-* django-admin startproject trydjango . 
-* (__name of the project__: trydjango, __current folder__: .)
-* python manage.py runserver
+```
+mkdir src
 
+cd src
+
+django-admin startproject trydjango . 
+
+# trydjango --> name of the project
+# .         --> current folder
+
+
+python manage.py runserver
+```
 ### Running our database
-
-* python manage.py migrate
-
+```
+python manage.py migrate
+```
 ## Creating an app
 
 ### Built-in components
 
-* Apps are pieces or components of a bigger django project
+Apps are pieces or components of a bigger django project
 
-* In setting.py file in INSTALLED_APPS you put third party apps or your own
+In setting.py file in INSTALLED_APPS you put third party apps or your own
 
 ### Migrating dbs with projects and creating a super user(admin)
+```
+python manage.py migrate
 
-* python manage.py migrate
-* python manage.py createsuperuser
-* Then authorize in /admin
+python manage.py createsuperuser
+```
+Then authorize in /admin
 
 ### Adding apps
+```
+python manage.py startapp products
 
-* python manage.py startapp products
-* python manage.py startapp cart
-* python manage.py startapp blog
-* python manage.py startapp profiles
+python manage.py startapp cart
 
+python manage.py startapp blog
+
+python manage.py startapp profiles
+```
 ### Creating Models
 
 * Put this code in products/models.py
@@ -152,6 +175,26 @@ class Product(models.Model):
 
 ## Change a model
 * if blank attribute = False then the field is required to be filled
+
+## Default Homepage to Custom Homepage
+
+First we create a new app "pages" with the following command:
+
+```
+python manage.py startapp pages 
+```
+Then add "pages" to the settings.py INSTALLED_APPS list
+
+Modify pages/views.py file
+
+```from django.http import HttpResponse
+from django.shortcuts import render
+
+# Create your views here.
+
+def home_view(*args, **kwargs):
+    return HttpResponse("<h1>Hello World!</h1>")
+```
 
 
 
