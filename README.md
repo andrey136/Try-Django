@@ -93,88 +93,87 @@ python manage.py startapp profiles
 ```
 ### Creating Models
 
-* Put this code in products/models.py
-
+Code in products/models.py
+```
 class Product(models.Model):
     title       = models.TextField()
     description = models.TextField()
     price       = models.TextField()
+```
 
-* Add products to the ISTALLED_APPS list in settings.py
-* Then save the settings.py file and models.py file
-* Write this code to the admin.py
+Code in products/admin.py
+```
+from .models import Product
 
-from django.contrib import admin
+admin.site.register(Product)
+```
 
-#Register your models here.
-from .models import MacBook
+Add products to the ISTALLED_APPS list in settings.py
 
-admin.site.register(MacBook)
-* save it
+Then save the settings.py, models.py and admin.py file
 
 ### Migrate commands
 
-* As you change models.py save it!!!
-* ALWAYS run these commands after making any changes to models.py
+As you change models.py save it!!!
 
-* python manage.py makemigrations
-* python manage.py migrate
+ALWAYS run these commands in console after making any changes to models.py
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+Run in conjuction with each other every single time you make changes to models.py
 
-* Run in conjuction with each other every single time you make changes to models.py
-
-
+```
 from django.db import models
-#Create your models here.
+# Create your models here.
 class Product(models.Model):
     title       = models.TextField()
     description = models.TextField()
     price       = models.TextField()
     __summary     = models.TextField()__ --(new line in models.py)
-
+```
 ## Create Product Objects in the Python shell
 
 ### Creating Object
- * python manage.py shell
- * from products.models import Product
- * Product.objects.all()
- * Product.objects.create()
- * Product.objects.create(title='New product 2', description='another one', price='19312', summary='sweet')
-
+```
+ python manage.py shell
+ from products.models import Product
+ Product.objects.all()
+ Product.objects.create()
+ Product.objects.create(title='New product 2', description='another one', price='19312', summary='sweet')
+```
 ## New Model Fields
-
-
-
 ### Starting over
 
-* To start over you need to delete all the files in migration folder except for the init.py in products app
+To start over you need to delete all the files in migration folder except for the init.py in products app
 
-* Delete sqlite db
+Delete sqlite db
 
-* Check out https://docs.djangoproject.com/en/3.1/ref/models/fields/#django.db.models.AutoField
+Check out https://docs.djangoproject.com/en/3.1/ref/models/fields/#django.db.models.AutoField
 
 ### Changes in models.py
-
+```
 from django.db import models
 
-#Create your models here.
+# Create your models here.
 class Product(models.Model):
     title       = models.CharField(max_length=120) # max_length = required
     description = models.TextField(blank=True, null=True)
     price       = models.DecimalField(decimal_places=2, max_digits=10000)
     summary     = models.TextField()
-
+```
 ### Further commands
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser -- because we deleted our sqlite database
 
-* python manage.py makemigrations
-* python manage.py migrate
-* python manage.py createsuperuser -- because we deleted our sqlite database
-
-* python manage.py shell
-* from products.models import Product
-* Product.objects.create(title='Newer title', price=239.99, summary='Awesome sause')
-
+python manage.py shell
+from products.models import Product
+Product.objects.create(title='Newer title', price=239.99, summary='Awesome sause')
+```
 ## Change a model
-* if blank attribute = False then the field is required to be filled
+If blank attribute = False then the field is required to be filled
 
 ## Default Homepage to Custom Homepage
 
@@ -202,50 +201,62 @@ def home_view(*args, **kwargs):
 
 ### OperationalError at /admin/products/product/add/
 
-Solution
-* pip install django==2.1.5
-
+Solution:
+```
+pip install django==2.1.5
+```
 ### products.Product.title: (fields.E120) CharFields must define a 'max_length' attribute.
 
-#Create your models here.
+```
+# Create your models here.
 class Product(models.Model):
     title       = __models.CharField() # max_length = required__
     description = models.TextField()
     price       = models.TextField()
     summary     = models.TextField(default='this is cool!')
 
-* title = models.CharField(max_length=120) -- You must set max_width attribute with models.CharField() field type
-
+# title = models.CharField(max_length=120) --> You must set max_width attribute in models.CharField() field type
+```
 ### You are trying to add a non-nullable field 'featured' to product
 This happens after changing the model of an APP without making any changes to the previous objects of this model in a database
 
 Previous model:
-#Create your models here.
+```
+# Create your models here.
 class Product(models.Model):
     title       = __models.CharField() # max_length = required__
     description = models.TextField()
     price       = models.TextField()
     summary     = models.TextField(default='this is cool!')
-
+```
 Current model:
-#Create your models here.
+```
+# reate your models here.
 class Product(models.Model):
     title       = models.CharField(max_length=120) # max_length = required
     description = models.TextField(blank=True, null=True)
     price       = models.DecimalField(decimal_places=2, max_digits=10000)
     summary     = models.TextField()
     featured    = models.BooleanField()
+```
+There's at least two solutions
+```
+featured = models.BooleanField(null=True)
+```
+Leaves this field empty in all the previous objects
+```
+featured = models.BooleanField(default=True)
+```
+Sets this field to true in all the previous objects
 
->> There's at least two solutions
-1. featured = models.BooleanField(null=True)
-* Leaves this field empty in all the previous objects
-1.  featured = models.BooleanField(default=True)
-* Sets this field to true in all the previous objects
-1. Choose one of the options provided in the shell
-* 1
-* True
+Choose one of the options provided in the shell
+```
+1
+True
+```
 
-### OperationalError at /admin/products/product/ no such column: products_product.featured
-
-* python manage.py makemigrations
-* python manage.py migrate
+### OperationalError at /admin/products/product/ no such column: products_product.featured:
+```
+python manage.py makemigrations
+python manage.py migrate
+```
